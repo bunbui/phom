@@ -24,4 +24,29 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
 	configure_file(cmake.toml cmake.toml COPYONLY)
 endif()
 
-project(phom)
+project(phom
+	LANGUAGES
+		C
+	VERSION
+		0.1.0
+)
+
+# Target: phom
+set(phom_SOURCES
+	cmake.toml
+	"src/phom/main.c"
+)
+
+add_executable(phom)
+
+target_sources(phom PRIVATE ${phom_SOURCES})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${phom_SOURCES})
+
+target_compile_features(phom PRIVATE
+	c_std_11
+)
+
+get_directory_property(CMKR_VS_STARTUP_PROJECT DIRECTORY ${PROJECT_SOURCE_DIR} DEFINITION VS_STARTUP_PROJECT)
+if(NOT CMKR_VS_STARTUP_PROJECT)
+	set_property(DIRECTORY ${PROJECT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT phom)
+endif()
