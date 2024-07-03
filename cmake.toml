@@ -1,0 +1,11 @@
+# Reference: https://build-cpp.github.io/cmkr/cmake-toml
+[project]
+name = "phom"
+
+# TODO: define a target for each of your executables/libraries like this:
+#[target.myexecutable]
+#type = "executable" # static, shared
+#sources = ["src/phom/*.cpp", "include/phom/*.hpp"]
+#include-directories = ["include"]
+#compile-features = ["cxx_std_11"]
+#link-libraries = ["target-or-library"]
