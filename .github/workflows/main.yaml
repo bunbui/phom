@@ -1,0 +1,21 @@
+name: Lint
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: seanmiddleditch/gha-setup-ninja@master
+      - name: Generate Ninja build file
+        run: cmake -B build -G Ninja
+      - name: Build
+        run: ninja -C build
+      - name: Test
+        run: ctest --test-dir build/tests
