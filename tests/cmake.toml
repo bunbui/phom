@@ -1,0 +1,19 @@
+[template.test]
+condition = "build-tests"
+type = "executable"
+link-libraries = [
+    "GTest::gtest",
+    "GTest::gtest_main",
+    "GTest::gmock",
+    "GTest::gmock_main",
+]
+cmake-before = """
+enable_testing()
+include(GoogleTest)
+"""
+pass-sources = false
+
+[target.hello-test]
+type = "test"
+sources = ["hello_test.cc"]
+cmake-after = "gtest_discover_tests(hello-test)"

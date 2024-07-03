@@ -24,16 +24,55 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
 	configure_file(cmake.toml cmake.toml COPYONLY)
 endif()
 
+# Options
+option(PHOM_BUILD_TESTS "" ON)
+
 # Variables
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 project(phom
 	LANGUAGES
 		C
+		CXX
 	VERSION
 		0.1.0
 )
 
+if(CMKR_ROOT_PROJECT AND NOT CMKR_DISABLE_VCPKG)
+	include(FetchContent)
+	# Fix warnings about DOWNLOAD_EXTRACT_TIMESTAMP
+	if(POLICY CMP0135)
+		cmake_policy(SET CMP0135 NEW)
+	endif()
+	message(STATUS "Fetching vcpkg (2024.06.15)...")
+	FetchContent_Declare(vcpkg URL "https://github.com/microsoft/vcpkg/archive/refs/tags/2024.06.15.tar.gz")
+	FetchContent_GetProperties(vcpkg)
+	if(NOT vcpkg_POPULATED)
+		FetchContent_Populate(vcpkg)
+		if(CMAKE_HOST_SYSTEM_NAME STREQUAL Darwin AND CMAKE_OSX_ARCHITECTURES STREQUAL "")
+			set(CMAKE_OSX_ARCHITECTURES ${CMAKE_HOST_SYSTEM_PROCESSOR} CACHE STRING "" FORCE)
+		endif()
+		include("${vcpkg_SOURCE_DIR}/scripts/buildsystems/vcpkg.cmake")
+	endif()
+endif()
+
+# Packages
+if(PHOM_BUILD_TESTS) # build-tests
+	find_package(GTest REQUIRED)
+
+endif()
+if(PHOM_BUILD_TESTS) # build-tests
+	# Subdirectory: tests
+	set(CMKR_CMAKE_FOLDER ${CMAKE_FOLDER})
+	if(CMAKE_FOLDER)
+		set(CMAKE_FOLDER "${CMAKE_FOLDER}/tests")
+	else()
+		set(CMAKE_FOLDER tests)
+	endif()
+	add_subdirectory(tests)
+	set(CMAKE_FOLDER ${CMKR_CMAKE_FOLDER})
+
+endif()
 # Target: phom
 set(phom_SOURCES
 	cmake.toml

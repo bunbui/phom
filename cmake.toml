@@ -2,10 +2,23 @@
 [project]
 name = "phom"
 version = "0.1.0"
-languages = ["C"]
+languages = ["C", "CXX"]
+
+[options]
+PHOM_BUILD_TESTS = true
 
 [variables]
 CMAKE_EXPORT_COMPILE_COMMANDS = true
+
+[subdir.tests]
+condition = "build-tests"
+
+[vcpkg]
+version = "2024.06.15"
+packages = ["gtest"]
+
+[find-package]
+GTest = { condition = "build-tests" }
 
 [target.phom]
 type = "executable"

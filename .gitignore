@@ -183,4 +183,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Cache
+.cache/
+
 # End of https://www.toptal.com/developers/gitignore/api/c,c++,visualstudiocode,linux,windows,macos,direnv,cmake
