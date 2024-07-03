@@ -12,6 +12,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: seanmiddleditch/gha-setup-ninja@master
       - name: Generate Ninja build file
         run: cmake -B build -G Ninja
       - name: Build
