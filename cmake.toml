@@ -4,6 +4,9 @@ name = "phom"
 version = "0.1.0"
 languages = ["C"]
 
+[variables]
+CMAKE_EXPORT_COMPILE_COMMANDS = true
+
 [target.phom]
 type = "executable"
 sources = ["src/phom/*.c"]

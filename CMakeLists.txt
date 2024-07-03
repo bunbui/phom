@@ -24,6 +24,9 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
 	configure_file(cmake.toml cmake.toml COPYONLY)
 endif()
 
+# Variables
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 project(phom
 	LANGUAGES
 		C
